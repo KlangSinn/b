@@ -2,20 +2,6 @@
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
 
-// GET PARAMETERS OF ORDER FROM APP
-// POST OR GET?
-$firstName 		= "Max";
-$lastName 		= "Mustermann";
-$postCode 		= "99510";
-$street 		= "Lindwurmweg";
-$houseNumber 	= "6";
-$city 			= "Weimar";
-$amount 		= "15";
-$productId 		= "16";
-$email 			= "max.mustermann@email.de";
-
-// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
-
 // INSERT ORDER INTO DATABASE
 // Get a db connection.
 $db = JFactory::getDbo();
@@ -56,5 +42,6 @@ $amount = (int) $amount;		// price of order
 $currency_code = trim('EUR'); 	// standard currency
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
+
 
 ?>

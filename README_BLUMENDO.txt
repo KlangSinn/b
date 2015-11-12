@@ -17,6 +17,17 @@ TWO MODULS NEEDED
 
 PARAMETERS
 
+via POST request
+firstName 	VARCHAR
+lastName 	VARCHAR
+postCode 	INT
+street		VARCHAR
+houseNumber	INT
+city		VARCHAR
+amount		INT
+productId	INT
+email		VARCHAR
+
 # # # # # # # # # # # # # # # # # # # # 
 
 ADDRESS FOR WEBVIEW
