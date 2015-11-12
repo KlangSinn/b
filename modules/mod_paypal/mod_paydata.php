@@ -53,7 +53,6 @@ $db->execute();
 
 // SET PARAMETERS FOR FORWARING
 $amount = (int) $amount;		// price of order
-$length = 1;					// special value for paaypal joomla plugin, should between 1 and 4
 $currency_code = trim('EUR'); 	// standard currency
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 

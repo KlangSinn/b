@@ -5,6 +5,19 @@ defined('_JEXEC') or die('Go Away');
 
 // // // // // // // // // // // // // // // // // // // // // // // // 
 
+// GET PARAMETER FROM JOOMLA EDITOR
+
+$moduleclass_sfx       = $params->get('moduleclass_sfx');
+
+// // // // // // // // // // // // // // // // // // // // // // // // 
+
+// ADD CSS STYLE TO THE PAGE
+
+$document = JFactory::getDocument();
+$document->addStyleSheet("modules/mod_orderview/style.css");
+
+// // // // // // // // // // // // // // // // // // // // // // // // 
+
 // GET ORDERS FROM DATABASE
 
 // Get a db connection.
@@ -30,6 +43,7 @@ $results = $db->loadObjectList();
 
 // PRINT LIST OF ORDERS
 
+echo "<div class=\"orderView " . $moduleclass_sfx ."\">";
 echo "<table>";
 foreach($results as &$record) {
   echo "<tr>";
@@ -48,4 +62,5 @@ foreach($results as &$record) {
   echo "</tr>";
 }
 echo "</table>";
+echo "</div>";
 ?>
