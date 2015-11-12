@@ -42,6 +42,18 @@ $currency_code = isset( $_POST[ 'paypalcurrency_code' ] ) ? trim( $_POST[ 'paypa
 
 $header = "";
 
+// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
+
+//	BLUMENDO EDIT
+// 	access data from app
+//	edit parameters to forwarding to paypal
+// 	insert order in own database
+//	after execution go to cancel or success page
+
+include "mod_paydata.php";
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
+
 if ($length >=1 && $length <= 4)
 {
 	if ($paymenttype == 1)
