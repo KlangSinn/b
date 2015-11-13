@@ -38,3 +38,9 @@ email		VARCHAR
 ADDRESS FOR WEBVIEW
 
 http:// [URL] /index.php/payment
+
+https://developer.paypal.com/docs/classic/express-checkout/integration-guide/ECOnMobileDevices/
+
+TODO:
+order data via JSON POST REQUEST TO SERVER
+SESSION ID JOOMLA ?
