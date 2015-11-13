@@ -10,7 +10,7 @@ $db = JFactory::getDbo();
 $query = $db->getQuery(true);
  
 // Insert columns.
-$columns = array('firstName', 'lastName', 'postCode', 'street', 'houseNumber', 'city', 'amount', 'productId', 'email');
+$columns = array('firstName', 'lastName', 'postCode', 'street', 'houseNumber', 'city', 'amount', 'productId', 'email', 'error', 'success');
  
 // Insert values.
 $values = array( 
@@ -22,7 +22,9 @@ $values = array(
 	     $db->quote($city), 
 	      $amount, 
 	       $productId,
-	       $db->quote($email)
+	       $db->quote($email),
+	        0,
+	         0
 	);
  
 // Prepare the insert query.
@@ -34,6 +36,8 @@ $query
 // Set the query using our newly populated query object and execute it.
 $db->setQuery($query);
 $db->execute();
+
+$recordId = $db->insertid();
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
 

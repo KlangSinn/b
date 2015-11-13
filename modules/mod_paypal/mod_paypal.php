@@ -55,6 +55,7 @@ if(!$error) {
 	// for other payment types the url has to be changed
 
 	$header = "Location: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=".$paypal_email."&item_name=".$paypal_org."&amount=".$amount."&no_shipping=0&no_note=1&tax=0&currency_code=".$currency_code."&bn=PP%2dBuyNowBF&charset=UTF%2d8&return=".$paypalreturn."&cancel=".$paypalcancel;
+	//$header = "Location: http://saschadobschal.de/blumendoTest/index.php/auftrag-gesendet?recordId=" . $recordId;
 
 	if ($paymentlocation != "") {
 		$header = $header."&lc=".$paymentlocation;

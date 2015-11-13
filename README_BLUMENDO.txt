@@ -6,10 +6,15 @@ mail@saschadobschal.de
 
 # # # # # # # # # # # # # # # # # # # # 
 
-TWO MODULS NEEDED
+WEBSERVICE BUILT WITH JOOMLA 3.*
+	
+MODULES
 
 * mod_paypal
 	payment process
+* mod_paysuccess
+	javascriptInterface to Android
+	adding success to database
 * mod_orderview
 	admin page to show orders in list
 

@@ -28,7 +28,7 @@ $query = $db->getQuery(true);
  
 // Select all records from the user profile table where key begins with "custom.".
 // Order it by the ordering field.
-$query->select($db->quoteName(array('orderId', 'firstName', 'lastName', 'postCode', 'street', 'houseNumber', 'city', 'amount', 'productId', 'email')));
+$query->select($db->quoteName(array('orderId', 'firstName', 'lastName', 'postCode', 'street', 'houseNumber', 'city', 'amount', 'productId', 'email', 'error', 'success')));
 $query->from($db->quoteName('#__product_orders'));
 //$query->where($db->quoteName('profile_key') . ' LIKE '. $db->quote('\'custom.%\''));
 //$query->order('ordering ASC');
@@ -45,6 +45,7 @@ $results = $db->loadObjectList();
 
 echo "<div class=\"orderView " . $moduleclass_sfx ."\">";
 echo "<table>";
+echo "<tr><td>ID</td><td>Name</td><td>E-Mail</td><td>Adresse</td><td>Preis</td><td>Produkt-ID</td><td>Fehler?</td><td>Bezahlt?</td></tr>";
 foreach($results as &$record) {
   echo "<tr>";
   echo "<td>" . $record->orderId . "</td>";
@@ -54,11 +55,15 @@ foreach($results as &$record) {
   echo "<td>" . $record->email . "</td>";  
 
   // address
-  echo "<td>" . $record->street . " " . $record->houseNumber . ", " . $record->postCode . " " . $record->city . "</td>";
+  echo "<td>" . $record->street . " " . $record->houseNumber . ", <br>" . $record->postCode . " " . $record->city . "</td>";
 
   // product
   echo "<td>" . $record->amount . " EUR</td>";
   echo "<td>" . $record->productId . "</td>";    
+
+  echo "<td>" . ($record->error != 0 ? "<span style=\"color: red;\">JA</span>" : "<span style=\"color: green;\">NEIN</span>") . "</td>";
+  echo "<td>" . ($record->success == 1 ? "<span style=\"color: green;\">JA</span>" : "<span style=\"color: red;\">NEIN</span>") . "</td>";
+
   echo "</tr>";
 }
 echo "</table>";
