@@ -37,7 +37,8 @@ $query
 $db->setQuery($query);
 $db->execute();
 
-$recordId = $db->insertid();
+// GET ORDER ID FROM DB AND SET INTO SESSION
+$orderId = $db->insertid();
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
 
