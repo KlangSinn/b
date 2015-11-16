@@ -24,6 +24,7 @@ class PaypalCredentials {
 	private $PAYERID;
 	private $PAYERMAIL;
 	private $DESC;
+	private $L_PAYMENTREQUEST_0_NAME0 = "test test test";
 
 	// // // // // // // // // // // // // // // // // // // //
 	// // // // // // // // // // // // // // // // // // // //
@@ -63,13 +64,13 @@ class PaypalCredentials {
 		$this->PAYMENTREQUEST_0_CURRENCYCODE = $cur;
 	}
 	public function setAmount($am) {
-		$this->PAYMENTREQUEST_0_AMT = $am;
+		$this->PAYMENTREQUEST_0_AMT = urlencode($am);
 	}	
 	public function setPayerMail($pm) {
-		$this->PAYERMAIL = $pm;
+		$this->PAYERMAIL = urlencode($pm);
 	}
 	public function setDesc($desc) {
-		$this->DESC = $desc;
+		$this->DESC = urlencode($desc);
 	}
 
 	// // // // // // // // // // // // // // // // // // // //
@@ -89,6 +90,7 @@ class PaypalCredentials {
 					"&PAYMENTREQUEST_0_CURRENCYCODE=".$this->PAYMENTREQUEST_0_CURRENCYCODE.
 					"&PAYMENTREQUEST_0_DESC=".$this->DESC.
 					"&EMAIL=".$this->PAYERMAIL.
+					"&L_PAYMENTREQUEST_0_NAME0=".$L_PAYMENTREQUEST_0_NAME0.
 					"&cancelUrl=".$this->CANCELURL.
 					"&returnUrl=".$this->RETURNURL;
 		} else if($this->METHOD == "GetExpressCheckoutDetails") {

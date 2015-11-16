@@ -29,14 +29,16 @@ $paypal_cancelurl   = $params->get('paypal_cancelurl');
 
 // 		Parameters get from mobile device
 
-/*if(isset($_POST["AMOUNT"])) {
-	$paypal_amount = (int) $_POST["AMOUNT"];
+if(isset($_POST["AMOUNT"], $_POST["EMAIL"], $_POST["DESC"])) {
+	$paypal_amount = floatval($_POST["AMOUNT"]);
+	$paypal_email = $_POST["EMAIL"];
+	$paypal_desc = $_POST["DESC"];
 } else {
 	die("Missing parameters.");
-}*/
-$paypal_amount  = 5;
+}
+/*$paypal_amount  = 5;
 $paypal_email 	= urlencode("klaus.dieter@test.de");
-$paypal_desc    = urlencode("Blauer Blumenstrauß für Gabi.");
+$paypal_desc    = urlencode("Blauer Blumenstrauß für Gabi.");*/
 
 // // // // // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // // // // // //
