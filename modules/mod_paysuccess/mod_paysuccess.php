@@ -40,7 +40,7 @@ if(isset($_GET["submit"], $_GET["token"], $_GET["PayerID"], $_GET["amount"], $_G
 
 	$token 			= $_GET["token"];
 	$payerid 		= $_GET["PayerID"];
-	$paypal_amount 	= (int) $_GET["amount"];
+	$paypal_amount 	= floatval($_GET["amount"]);
 	$order_id 		= $_GET["order_id"];
 
 	$PC = new PaypalCredentials("DoExpressCheckoutPayment");

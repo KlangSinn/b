@@ -28,10 +28,10 @@ $query = $db->getQuery(true);
  
 // Select all records from the user profile table where key begins with "custom.".
 // Order it by the ordering field.
-$query->select($db->quoteName(array('order_id', 'payer_first_name', 'payer_last_name', 'ship_to_zip', 'ship_to_street', 'ship_to_city', 'amount', 'payer_email', 'success', 'desc')));
+$query->select($db->quoteName(array('order_id', 'payer_first_name', 'payer_last_name', 'ship_to_zip', 'ship_to_street', 'ship_to_city', 'amount', 'payer_email', 'success', 'desc', 'timestamp')));
 $query->from($db->quoteName('#__product_orders'));
 //$query->where($db->quoteName('profile_key') . ' LIKE '. $db->quote('\'custom.%\''));
-//$query->order('ordering ASC');
+$query->order('timestamp DESC');
  
 // Reset the query using our newly populated query object.
 $db->setQuery($query);
@@ -44,11 +44,18 @@ $results = $db->loadObjectList();
 // PRINT LIST OF ORDERS
 
 //echo "<div class=\"orderView " . $moduleclass_sfx ."\">";
+$totalAmount = 0.0;
+foreach($results as &$record) {
+  $totalAmount += $record->amount;
+}
+
 echo "<div class=\"orderView\">";
+echo "<h3 style=\"color: green;\">Gesamtumsatz: +" . $totalAmount . " EUR</h3>";
 echo "<table>";
-echo "<tr><td>ID</td><td>Name</td><td>E-Mail</td><td>Adresse</td><td>Preis</td><td>Abgeschlossen?</td><td>Beschreibung</td></tr>";
+echo "<tr><td>Datum / Uhrzeit</td><td>ID</td><td>Name</td><td>E-Mail</td><td>Adresse</td><td>Preis</td><td>Abgeschlossen?</td><td>Beschreibung</td></tr>";
 foreach($results as &$record) {
   echo "<tr>";
+  echo "<td>" . date('d.m.Y \u\m H:i \U\h\r',strtotime($record->timestamp)) . "</td>";
   echo "<td>" . $record->order_id . "</td>";
 
   // user

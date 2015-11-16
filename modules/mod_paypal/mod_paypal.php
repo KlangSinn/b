@@ -65,9 +65,6 @@ if(isset($_POST["AMOUNT"], $_POST["EMAIL"], $_POST["DESC"])) {
 } else {
 	die("Missing parameters.");
 }
-/*$paypal_amount  = 5;
-$paypal_email 	= urlencode("klaus.dieter@test.de");
-$paypal_desc    = urlencode("Blauer Blumenstrauß für Gabi.");*/
 
 // // // // // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // // // // // //
@@ -121,7 +118,7 @@ curl_close($curl);
 // 		else redirect to paypal
 
 if($parameter["ACK"] == "Success" AND isset($parameter["TOKEN"])) {	
-	header("Location: https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=".$parameter["TOKEN"]);
+	header("Location: https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=".$parameter["TOKEN"]/*."&useraction=commit"*/);
 } else {
 	print_r($parameter);
 }
