@@ -1,88 +1,84 @@
 <?php
 
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+
 // no direct access
 defined('_JEXEC') or die('Go Away');
 
-// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
+include "mod_paypalCredentials.php";
 
-// PARAMETERS 
-// from joomla editor
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
 
-$paypal_email       = $params->get('paypal_email');
-$paypal_org         = $params->get('paypal_org');
-$paypalcancel       = $params->get('paypalcancel');
-$paypalreturn       = $params->get('paypalreturn');
-$paymentlocation   	= $params->get('paymentlocation');
+// 		parameters from joomla backend
+// 		needed for paypal request headers
 
-$flowerTypes  		= [12 => "Roter Strauss", 13 => "Blauer Strauss"];
+$paypal_user       	= $params->get('paypal_user');
+$paypal_pw       	= $params->get('paypal_pw');
+$paypal_signature   = $params->get('paypal_signature');
+$paypal_currencycode= $params->get('paypal_currencycode');
+$paypal_returnurl   = $params->get('paypal_returnurl');
+$paypal_cancelurl   = $params->get('paypal_cancelurl');
 
-if(isset(
-		$_POST["firstName"], 
-		$_POST["lastName"], 
-		$_POST["postCode"],
-		$_POST["street"],
-		$_POST["houseNumber"],
-		$_POST["city"],
-		$_POST["amount"],
-		$_POST["productId"],
-		$_POST["email"])) {	
-	$firstName 		= $_POST["firstName"];
-	$lastName 		= $_POST["lastName"];
-	$postCode 		= $_POST["postCode"];
-	$street 		= $_POST["street"];
-	$houseNumber 	= $_POST["houseNumber"];
-	$city 			= $_POST["city"];
-	$amount 		= $_POST["amount"];
-	$productId 		= $_POST["productId"];
-	$email 			= $_POST["email"];
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+
+// 		store and format GET parameter for paypal request
+// 		use getRequestString() to get the parameters for the URL
+
+$PC = new PaypalCredentials("SetExpressCheckout");
+$PC->setCancelUrl($paypalcancel);
+$PC->setReturnUrl($paypalreturn);
+$PC->setUser($paypal_user);
+$PC->setPw($paypal_pw);
+$PC->setSignature($paypal_signature);
+$PC->setCurrency($paypal_currencycode);
+$PC->setReturnUrl($paypal_returnurl);
+$PC->setCancelUrl($paypal_cancelurl);
+
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+
+// 		Make cURL request to get TOKEN of transaction
+// 		use paypal setExpressCheckout
+// 		decode returned information
+// 		store decoded information in array "parameter"
+
+$parameter = array();
+$curl = curl_init();
+curl_setopt_array($curl, array(
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_URL => 'https://api-3t.sandbox.paypal.com/nvp/?'.$PC->getRequestString(),
+    CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+));
+foreach (explode('&', curl_exec($curl)) as $chunk) {
+    $param = explode("=", $chunk);
+    if ($param) {
+    	$parameter = array_merge($parameter, array(urldecode($param[0]) => urldecode($param[1])));
+    }
+}
+curl_close($curl);
+
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+
+// 		if transcation fails show error message
+// 		else redirect to paypal
+
+if($parameter["ACK"] == "Success" AND isset($parameter["TOKEN"])) {	
+	header("Location: https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=".$parameter["TOKEN"]);
 } else {
-	//$error = true;
+	print_r($parameter);
 }
 
-$firstName 		= "Paul";
-$lastName 		= "Paul";
-$postCode 		= 123456;
-$street 		= "Straße und so";
-$houseNumber 	= 26;
-$city 			= "weimar";
-$amount 		= 5;
-$productId 		= 12;
-$email 			= "klaus.dieter@test.de";
-
-// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
-
-if(!$error) {	
-
-	// STRING FOR PRODUCT INFORMATION
-	if(isset($flowerTypes[$productId]))
-		$paypal_org .= " - " . $flowerTypes[$productId];
-
-	//	BLUMENDO EDIT
-	// 	access data from app
-	//	edit parameters to forwarding to paypal
-	// 	insert order in own database
-	//	after execution go to cancel or success page
-
-	include "mod_paydata.php";
-
-	// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
-
-	// REDIRECT TO PAYPAL
-	// for other payment types the url has to be changed
-
-	$header = "Location: https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&business=".$paypal_email."&item_name=".$paypal_org."&amount=".$amount."&no_shipping=0&no_note=1&tax=0&currency_code=".$currency_code."&bn=PP%2dBuyNowBF&charset=UTF%2d8&return=".$paypalreturn."&cancel=".$paypalcancel;
-	//$header = "Location: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=".$paypal_email."&item_name=".$paypal_org."&amount=".$amount."&no_shipping=0&no_note=1&tax=0&currency_code=".$currency_code."&bn=PP%2dBuyNowBF&charset=UTF%2d8&return=".$paypalreturn."&cancel=".$paypalcancel;
-	//$header = "Location: http://saschadobschal.de/blumendoTest/index.php/auftrag-gesendet";
-
-	if ($paymentlocation != "") {
-		$header = $header."&lc=".$paymentlocation;
-	}	
-
-	header($header);
-} else {
-	echo "<span style=\"color: red; font-size: 150%;\">A error occurs.</span>";
-}
-
-// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
 
 ?>

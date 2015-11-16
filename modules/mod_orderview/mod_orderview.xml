@@ -14,6 +14,7 @@
   <files>
     <filename module="mod_orderview">mod_orderview.php</filename>
     <filename module="mod_orderview">index.html</filename>
+    <filename module="mod_orderview">style.css</filename>
   </files>
  <config>
     <fields name="params">

@@ -15,11 +15,17 @@
   <files>
     <filename module="mod_paysuccess">mod_paysuccess.php</filename>
     <filename module="mod_paysuccess">index.html</filename>
+    <filename module="mod_paysuccess">style.css</filename>
   </files>
  <config>
     <fields name="params">
        <fieldset name="basic">
-        <field name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="A suffix to be applied to the css class of the module (table.moduletable), this allows individual module styling" />        
+       <field name="paypal_user" type="text" default="test_bsp@mail.com" label="PayPal User ID" 
+          description="Your Paypal User ID." />
+        <field name="paypal_pw" type="text" default="..." label="PayPal Password" 
+          description="Your Paypal Password." />
+        <field name="paypal_signature" type="text" default="..." label="PayPal API Signature" 
+          description="Your Paypal API Signature." />        
    </fieldset>
 </fields>
 </config>
