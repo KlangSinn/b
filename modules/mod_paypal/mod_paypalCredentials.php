@@ -22,6 +22,8 @@ class PaypalCredentials {
 	private $VERSION 						= 78;		// API VERSION
 	private $TOKEN;  									// needed for get information from paypal about payment (GetExpressCheckoutDetails)
 	private $PAYERID;
+	private $PAYERMAIL;
+	private $DESC;
 
 	// // // // // // // // // // // // // // // // // // // //
 	// // // // // // // // // // // // // // // // // // // //
@@ -55,7 +57,7 @@ class PaypalCredentials {
 		$this->PW = $pw;
 	}
 	public function setSignature($signature) {
-		$this->SIGNATURE = signature;
+		$this->SIGNATURE = $signature;
 	}
 	public function setCurrency($cur) {
 		$this->PAYMENTREQUEST_0_CURRENCYCODE = $cur;
@@ -63,6 +65,12 @@ class PaypalCredentials {
 	public function setAmount($am) {
 		$this->PAYMENTREQUEST_0_AMT = $am;
 	}	
+	public function setPayerMail($pm) {
+		$this->PAYERMAIL = $pm;
+	}
+	public function setDesc($desc) {
+		$this->DESC = $desc;
+	}
 
 	// // // // // // // // // // // // // // // // // // // //
 	// // // // // // // // // // // // // // // // // // // //
@@ -79,6 +87,8 @@ class PaypalCredentials {
 					"&PAYMENTREQUEST_0_PAYMENTACTION=".$this->PAYMENTREQUEST_0_PAYMENTACTION.
 					"&PAYMENTREQUEST_0_AMT=".$this->PAYMENTREQUEST_0_AMT.
 					"&PAYMENTREQUEST_0_CURRENCYCODE=".$this->PAYMENTREQUEST_0_CURRENCYCODE.
+					"&PAYMENTREQUEST_0_DESC=".$this->DESC.
+					"&EMAIL=".$this->PAYERMAIL.
 					"&cancelUrl=".$this->CANCELURL.
 					"&returnUrl=".$this->RETURNURL;
 		} else if($this->METHOD == "GetExpressCheckoutDetails") {
@@ -93,6 +103,7 @@ class PaypalCredentials {
 					"&PWD=".$this->PW.
 					"&SIGNATURE=".$this->SIGNATURE.
 					"&PAYMENTREQUEST_0_AMT=".$this->PAYMENTREQUEST_0_AMT.
+					"&PAYMENTREQUEST_0_CURRENCYCODE=".$this->PAYMENTREQUEST_0_CURRENCYCODE.
 					"&PAYMENTREQUEST_0_PAYMENTACTION=".$this->PAYMENTREQUEST_0_PAYMENTACTION.
 					"&TOKEN=".$this->TOKEN.
 					"&PAYERID=".$this->PAYERID.

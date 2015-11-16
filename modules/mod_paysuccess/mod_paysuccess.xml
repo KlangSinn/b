@@ -25,7 +25,9 @@
         <field name="paypal_pw" type="text" default="..." label="PayPal Password" 
           description="Your Paypal Password." />
         <field name="paypal_signature" type="text" default="..." label="PayPal API Signature" 
-          description="Your Paypal API Signature." />        
+          description="Your Paypal API Signature." />
+        <field name="paypal_currencycode" type="text" default="EUR" label="Währung" 
+          description="Currency for Payment." />         
    </fieldset>
 </fields>
 </config>

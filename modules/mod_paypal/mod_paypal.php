@@ -27,6 +27,21 @@ $paypal_cancelurl   = $params->get('paypal_cancelurl');
 // // // // // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // // // // // //
 
+// 		Parameters get from mobile device
+
+/*if(isset($_POST["AMOUNT"])) {
+	$paypal_amount = (int) $_POST["AMOUNT"];
+} else {
+	die("Missing parameters.");
+}*/
+$paypal_amount  = 5;
+$paypal_email 	= urlencode("klaus.dieter@test.de");
+$paypal_desc    = urlencode("Blauer Blumenstrauß für Gabi.");
+
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+
 // 		store and format GET parameter for paypal request
 // 		use getRequestString() to get the parameters for the URL
 
@@ -39,6 +54,9 @@ $PC->setSignature($paypal_signature);
 $PC->setCurrency($paypal_currencycode);
 $PC->setReturnUrl($paypal_returnurl);
 $PC->setCancelUrl($paypal_cancelurl);
+$PC->setAmount($paypal_amount);
+$PC->setPayerMail($paypal_email);
+$PC->setDesc($paypal_desc);
 
 // // // // // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // // // // // //
