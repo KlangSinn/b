@@ -4,8 +4,37 @@
 // // // // // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // // // // // //
 
-// no direct access
+// 		no direct access
 defined('_JEXEC') or die('Go Away');
+
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+
+// 		API KEY?
+// 		Security stuff
+
+if(isset($_POST["api_key"], $_POST["api_pw"])) {
+	$db = JFactory::getDbo();
+	$query = $db->getQuery(true);
+	$query->select($db->quoteName(array('key', 'pw')));
+	$query->from($db->quoteName('#__api_creds'));
+	$query->where($db->quoteName('key') . ' LIKE '. $db->quote($_POST["api_key"]));
+	$db->setQuery($query);
+	$results = $db->loadObjectList();
+
+	if(count($results) == 1) {
+  		if($results[0]->pw != $_POST["api_pw"]) {
+  			die("Authentication failed.2");
+  		}
+	} else {
+		die("Authentication failed.1");
+	}
+}
+
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
 
 include "mod_paypalCredentials.php";
 
