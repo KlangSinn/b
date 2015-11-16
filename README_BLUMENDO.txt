@@ -44,3 +44,6 @@ https://developer.paypal.com/docs/classic/express-checkout/integration-guide/ECO
 TODO:
 order data via JSON POST REQUEST TO SERVER
 SESSION ID JOOMLA ?
+API KEY
+NEUE PAYPAL WEITERLEITUNG
+POST JSON
